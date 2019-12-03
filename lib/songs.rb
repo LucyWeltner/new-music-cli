@@ -1,4 +1,5 @@
 require_relative "../lib/scraper.rb"
+
 class Song
   attr_accessor :title, :artist, :url
   @@songs = []
@@ -35,22 +36,22 @@ class Song
   end
   
   def self.search_by_title(a_title)
-    self.all.find{|song| song.title == a_title}
+    self.all.find{|song| song.title.downcase == a_title.downcase}
   end 
   
   def self.search_by_artist(an_artist)
-    found = self.all.select{|song| song.artist == an_artist}
+    found = self.all.select{|song| song.artist.downcase == an_artist.downcase}
     #If you only find one song by an artist, return only that song
     if found.length == 1 
-      found.length[0]
+      found[0]
     end 
   end 
   
   def self.search 
     puts "Search for a song by typing the title or artist."
     input = gets.chomp!
-    if search_by_artist(input.capitalize)
-      results = search_by_artist(input.capitalize)
+    if search_by_artist(input)
+      results = search_by_artist(input)
       #if there are multiple results, iterate through an array to show each one
       if results.class == Array 
         puts "There are #{results.length} songs that match your query:"
@@ -61,8 +62,8 @@ class Song
       else 
         puts "The song that matches your query is #{results.title} by #{results.artist} which you can listen to at #{results.url}."
       end 
-    elsif search_by_title(input.capitalize)
-      song = search_by_title(input.capitalize)
+    elsif search_by_title(input)
+      song = search_by_title(input)
       puts "The song that matches your query is #{song.title} by #{song.artist} which you can listen to at #{song.url}"
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
@@ -79,5 +80,5 @@ class Song
 end 
 
 Song.make_songs_from_description
-p Song.search_by_title("It Just Doesn't Happen")
+Song.search
 
