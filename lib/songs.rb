@@ -51,16 +51,17 @@ class Song
   def self.search 
     puts "You can search for a song by typing the title or artist."
     input = gets.chomp!
-    if search_by_artist(input) 
-      results = search_by_artist(input)
+    if search_by_artist(input.capitalize)
+      results = search_by_artist(input.capitalize)
       if results.class == Array 
         puts "There are #{results.length} songs that match your query:"
         results.each_with_index do |song, index|
           puts "#{index+1}. #{song.title} by #{song.artist}. Listen at #{song.url}"
       else 
-        puts "The song that matches your query is #{song.title} by #{song.artist} which you can listen to at #{song.url}."
+        puts "The song that matches your query is #{results.title} by #{results.artist} which you can listen to at #{results.url}."
       end 
-    elsif search_by_title(input)
+    elsif search_by_title(input.capitalize)
+      song = search_by_title(input.capitalize)
       puts "The song that matches your query is #{song.title} by #{song.artist} which you can listen to at #{song.url}"
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
