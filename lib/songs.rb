@@ -36,6 +36,18 @@ class Song
     end
   end
   
+  def self.search_by_title(title)
+    @@songs.find{|song| song.title == title}
+  end 
+  
+  def self.search_by_artist(artist)
+    found = @@songs.select{|song| song.artist == artist
+    #If you only find one song by an artist, return only that song
+    if found.length == 1 
+      found.length[0]
+    end 
+  end 
+  
   def self.all_songs 
     @@songs 
   end 
