@@ -1,11 +1,19 @@
+require "json"
 require "open-uri"
-require "nokogiri"
 
-class Scraper
-  self.scrape_from_youtube(link)
-    html = Nokogiri::HTML(open("https://www.youtube.com/watch?v=rLCwc_nrimk&list=PLP4CSgl7K7or84AAhr7zlLNpghEnKWu2c&index=1"))
-    p html.css("#description").text
+class JsonParser
+  API_KEY = "AIzaSyC2_Q6OO7AaVveAOwRTr8dnEbwpSCPm6HU"
+  def self.parse_playlist_json
+    json = open("https://www.googleapis.com/youtube/v3/playlistItems?playlistId=PLP4CSgl7K7or84AAhr7zlLNpghEnKWu2c&part=contentDetails&key=" + API_KEY).read
+    json = JSON.parse(json)
+    self.get_description(json["items"][0]["contentDetails"]["videoId"])
+  end
+  def self.get_description(video_id)
+    json = open("https://www.googleapis.com/youtube/v3/videos?id=#{video_id}&part=snippet&key=" + API_KEY).read
+    json = JSON.parse(json)
+    description = json["items"][0]["snippet"]["description"]
+    p description.scan(/\n\S* - \S*\n/)
   end
 end
     
-Scraper.scrape_from_youtube("https://www.youtube.com/watch?v=rLCwc_nrimk&list=PLP4CSgl7K7or84AAhr7zlLNpghEnKWu2c&index=1")
+JsonParser.get_description("rLCwc_nrimk")
