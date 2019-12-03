@@ -36,6 +36,7 @@ class Song
   end
   
   def self.search_by_title(a_title)
+    #downcase the song title and input so the search works regardless of capitalization
     self.all.find{|song| song.title.downcase == a_title.downcase}
   end 
   
@@ -75,10 +76,13 @@ class Song
   end 
   
   def self.display_all
-    self.all_songs.each_with_index
+    puts "Here are all the songs that came out this week."
+    self.all.each_with_index do |song, index|
+      puts "#{index+1}. #{song.title} by #{song.artist} listen at #{song.url}"
+    end
   end
 end 
 
 Song.make_songs_from_description
-Song.search
+Song.display_all
 
