@@ -12,8 +12,7 @@ class JsonParser
     json = open("https://www.googleapis.com/youtube/v3/videos?id=#{video_id}&part=snippet&key=" + API_KEY).read
     json = JSON.parse(json)
     description = json["items"][0]["snippet"]["description"]
-    p description.scan(/\n\S* - \S*\n/)
+    description
   end
 end
     
-JsonParser.get_description("rLCwc_nrimk")
