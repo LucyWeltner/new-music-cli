@@ -36,15 +36,34 @@ class Song
     end
   end
   
-  def self.search_by_title(title)
-    @@songs.find{|song| song.title == title}
+  def self.search_by_title(a_title)
+    @@songs.find{|song| song.title == a_title}
   end 
   
-  def self.search_by_artist(artist)
-    found = @@songs.select{|song| song.artist == artist
+  def self.search_by_artist(an_artist)
+    found = @@songs.select{|song| song.artist == an_artist
     #If you only find one song by an artist, return only that song
     if found.length == 1 
       found.length[0]
+    end 
+  end 
+  
+  def self.search 
+    puts "You can search for a song by typing the title or artist."
+    input = gets.chomp!
+    if search_by_artist(input) 
+      results = search_by_artist(input)
+      if results.class == Array 
+        puts "There are #{results.length} songs that match your query:"
+        results.each_with_index do |song, index|
+          puts "#{index+1}. #{song.title} by #{song.artist}. Listen at #{song.url}"
+      else 
+        puts "The song that matches your query is #{song.title} by #{song.artist} which you can listen to at #{song.url}."
+      end 
+    elsif search_by_title(input)
+      puts "The song that matches your query is #{song.title} by #{song.artist} which you can listen to at #{song.url}"
+    else 
+      puts "Sorry, there are no results that match your query. Please check your spelling and try again."
     end 
   end 
   
