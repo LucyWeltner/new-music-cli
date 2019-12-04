@@ -9,6 +9,18 @@ class Song
     @url = url 
   end
 
+  def listen_query
+    puts "Would you like to listen to this song? Press y if yes."
+    listen = gets.chomp!.downcase
+    if listen == "y"
+      self.listen_to_song
+    end
+  end 
+  
+  def listen_to_song 
+    system("open", self.url)
+  end
+
   def self.trim_description
     description = JsonParser.parse_playlist_json
     description_array = description.split("\n")
@@ -68,17 +80,10 @@ class Song
     elsif search_by_title(input)
       song = search_by_title(input)
       puts "The song that matches your query is #{song.title} by #{song.artist} which you can listen to at #{song.url}"
+      song.listen_query
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
     end 
-  end 
-  
-  def listen_query
-    puts "Would you like to listen to this song? Press y if yes."
-    listen = gets.chomp!.downcase
-    if listen == "y"
-      self.listen_to_song
-    end
   end 
   
   def self.all 
@@ -94,5 +99,5 @@ class Song
 end 
 
 Song.make_songs_from_description
-Song.display_all
+Song.search
 
