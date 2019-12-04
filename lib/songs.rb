@@ -9,6 +9,13 @@ class Song
     @title = title 
     @artist = artist 
     @url = url 
+    @@songs << self
+  end
+  
+  def listen_to_song 
+    puts "listening to #{self.title}"
+    system("open", self.url)
+    #Launchy.open(self.url)
   end
 
   def listen_query
@@ -26,12 +33,6 @@ class Song
       song_array[listen - 1].listen_to_song
     end
   end
-  
-  def listen_to_song 
-    puts "listening to #{self.title}"
-    system("open", self.url)
-    #Launchy.open(self.url)
-  end
 
   def self.trim_description
     description = JsonParser.parse_playlist_json
@@ -48,14 +49,11 @@ class Song
     description = self.trim_description
     song_array = description.select {|line| line.include?(" - ")}
     song_aoa = song_array.map{|title_and_artist| title_and_artist.split(" - ")}
-    
     #make an array of urls. Each song should have a matching URL.
     url_array = description.select{|line| line.include?("https://")}
-    
     #iterate over song array and create a new song object for each element of the array. 
     song_aoa.each_with_index do |song, index|
       new_song = self.new(song[1],song[0],url_array[index])
-      @@songs << new_song
     end
   end
   
