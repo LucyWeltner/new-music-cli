@@ -38,14 +38,14 @@ class Song
     description = JsonParser.parse_playlist_json
     description_array = description.split("\n")
     first_songs_index = description_array.find_index{|line| line.include?("- ")}
-    #to get the index of the last song, reverse the array, find the index of the first song, then multiply that number by -1 (because it's the same distance from the beginning of the reversed array as it is from the end of the original array, ie the second element of the reversed array is the second to last element of the original array)
+    #to get the index of the last song, reverse the array, find the index of the first song, then multiply that number by -1. This works because each song is the same distance from the beginning of the reversed array as it is from the end of the original array, ie the second element of the reversed array is the second to last element of the original array.
     last_songs_index = description_array.reverse.find_index{|line| line.include?(" - ")}*-1
     #select and return all the content between the first song and the last song. 
     description_array = description_array[first_songs_index..last_songs_index]
   end
     
   def self.make_songs_from_description
-    #make an array of songs. Each song is represented by a smaller array with title and artist elements.
+    #make an array of songs. Each song is represented by a smaller array containing the title and artist.
     description = self.trim_description
     song_array = description.select {|line| line.include?(" - ")}
     song_aoa = song_array.map{|title_and_artist| title_and_artist.split(" - ")}
