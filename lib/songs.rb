@@ -1,4 +1,5 @@
 require_relative "../lib/scraper.rb"
+require_relative "../lib/artist.rb"
 require 'launchy'
 require 'pry'
 
@@ -58,7 +59,7 @@ class Song
     url_array = description.select{|line| line.include?("https://")}
     #iterate over song array and create a new song object for each element of the array. 
     song_aoa.each_with_index do |song, index|
-      new_song = self.new(song[1],song[0],url_array[index])
+      new_song = self.new(Artist.find_or_create(song[1]),song[0],url_array[index])
     end
   end
   
@@ -68,7 +69,7 @@ class Song
   end 
   
   def self.search_by_artist(an_artist)
-    found = self.all.select{|song| song.artist.downcase.include?(an_artist.downcase)}
+    found = self.all.select{|song| song.artist.name.downcase.include?(an_artist.downcase)}
   end 
   
   def self.search 
@@ -80,17 +81,17 @@ class Song
       if results.length > 1
         puts "There are #{results.length} songs that match your query:"
         results.each_with_index do |song, index|
-          puts "#{index+1}. #{song.title} by #{song.artist}. Listen at #{song.url}"
+          puts "#{index+1}. #{song.title} by #{song.artist.name}. Listen at #{song.url}"
         end
         listen_query_array(results)
       #if there is only one result, show only that result
       else 
-        puts "The song that matches your query is #{results[0].title} by #{results[0].artist} which you can listen to at #{results[0].url}."
+        puts "The song that matches your query is #{results[0].title} by #{results[0].artist.name} which you can listen to at #{results[0].url}."
         results[0].listen_query
       end 
     elsif search_by_title(input)
       song = search_by_title(input)
-      puts "The song that matches your query is #{song.title} by #{song.artist} which you can listen to at #{song.url}"
+      puts "The song that matches your query is #{song.title} by #{song.artist.name} which you can listen to at #{song.url}"
       song.listen_query
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
@@ -104,11 +105,12 @@ class Song
   def self.display_all
     puts "Here are all the songs that came out this week."
     self.all.each_with_index do |song, index|
-      puts "#{index+1}. #{song.title} by #{song.artist} listen at #{song.url}"
+      puts "#{index+1}. #{song.title} by #{song.artist.name} listen at #{song.url}"
     end
     listen_query_array(self.all)
   end
 end 
 
-#Song.search
+Song.make_songs_from_description
+Song.display_all
 
