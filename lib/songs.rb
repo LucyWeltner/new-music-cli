@@ -59,7 +59,7 @@ class Song
   
   def self.search_by_title(a_title)
     #downcase the song title and input so the search works regardless of capitalization
-    self.all.find{|song| song.title.downcase == a_title.downcase}
+    found = self.all.find{|song| song.title.downcase == a_title.downcase}
   end 
   
   def self.search_by_artist(an_artist)
@@ -69,7 +69,7 @@ class Song
   def self.search 
     puts "Search for a song by typing the title or artist."
     input = gets.chomp!
-    if search_by_artist(input)
+    if search_by_artist(input) != []
       results = search_by_artist(input)
       #iterate through the array to show each result
       if results.length > 1
@@ -106,5 +106,5 @@ class Song
 end 
 
 Song.make_songs_from_description
-Song.display_all
+p Song.search
 

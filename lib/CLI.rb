@@ -11,7 +11,6 @@ class CLI_interface
       input = gets.chomp!
     end 
     if input == "display"
-      p "I am here"
       Song.display_all 
     else
       Song.search 
