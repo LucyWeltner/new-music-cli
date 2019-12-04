@@ -1,8 +1,6 @@
 # New::Music::Cli
-Hello!
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/new/music/cli`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+This gem uses data from Anthony Fantano's most recent "Track Roundup" video to display recently released songs. The gem can show you all the songs released last week, lets you search the list of songs (by title or by author), and lets you play the songs by opening web pages from the command line.
 
 ## Installation
 
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Type display-all to display all songs or search to search for a song by title or artist. The gem will then prompt 
 
 ## Development
 
