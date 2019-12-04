@@ -59,11 +59,11 @@ class Song
   
   def self.search_by_title(a_title)
     #downcase the song title and input so the search works regardless of capitalization
-    found = self.all.find{|song| song.title.downcase == a_title.downcase}
+    found = self.all.find{|song| song.title.downcase.include?(a_title.downcase)}
   end 
   
   def self.search_by_artist(an_artist)
-    found = self.all.select{|song| song.artist.downcase == an_artist.downcase}
+    found = self.all.select{|song| song.artist.downcase.include?(an_artist.downcase)}
   end 
   
   def self.search 
@@ -106,5 +106,5 @@ class Song
 end 
 
 Song.make_songs_from_description
-p Song.search
+p Song.search_by_artist("Bill")
 

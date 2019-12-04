@@ -12,7 +12,7 @@ class CLI_interface
     end 
     if input == "display"
       Song.display_all 
-    else
+    elsif input == "search"
       Song.search 
     end 
   end 
