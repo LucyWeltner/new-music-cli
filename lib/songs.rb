@@ -42,10 +42,6 @@ class Song
   
   def self.search_by_artist(an_artist)
     found = self.all.select{|song| song.artist.downcase == an_artist.downcase}
-    #If you only find one song by an artist, return only that song
-    if found.length == 1 
-      found[0]
-    end 
   end 
   
   def self.search 
@@ -53,15 +49,21 @@ class Song
     input = gets.chomp!
     if search_by_artist(input)
       results = search_by_artist(input)
-      #if there are multiple results, iterate through an array to show each one
-      if results.class == Array 
+      #iterate through the array to show each result
+      if results.length > 1
         puts "There are #{results.length} songs that match your query:"
         results.each_with_index do |song, index|
           puts "#{index+1}. #{song.title} by #{song.artist}. Listen at #{song.url}"
         end
+        puts "Would you like to listen to any of these songs? Press the number corresponding to the song you'd like to listen to."
+        listen = gets.chomp!.to_i
+        if listen > 0 && listen < results.length + 1 
+          results[listen - 1].listen_to_song
+        end
       #if there is only one result, show only that result
       else 
-        puts "The song that matches your query is #{results.title} by #{results.artist} which you can listen to at #{results.url}."
+        puts "The song that matches your query is #{results[0].title} by #{results[0].artist} which you can listen to at #{results[0].url}."
+        results[0].listen_query
       end 
     elsif search_by_title(input)
       song = search_by_title(input)
@@ -69,6 +71,14 @@ class Song
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
     end 
+  end 
+  
+  def listen_query
+    puts "Would you like to listen to this song? Press y if yes."
+    listen = gets.chomp!.downcase
+    if listen == "y"
+      self.listen_to_song
+    end
   end 
   
   def self.all 
