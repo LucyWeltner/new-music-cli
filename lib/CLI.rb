@@ -1,19 +1,22 @@
 require_relative "./songs.rb"
 require_relative "./scraper.rb"
-require_relative "../bin/console"
-require_relative "..bin/setup"
+
 class CLI_interface 
   def self.start 
     puts "Welcome! To see a list of songs released this week, write display. To search for a specific song or artist who released a song this week, write search."
-    input = gets.chomp!.downcase
+    input = gets.chomp!
+    input = input.downcase
+    until input == "display" || input == "search" do
+      puts "Please type display or search."
+      input = gets.chomp!
+    end 
     if input == "display"
+      p "I am here"
       Song.display_all 
-    elsif input == "search"
+    else
       Song.search 
-    else 
-      while input != "display" && input != "search"
-        puts "Please type display or search."
-        input = gets.chomp!
-      end 
     end 
   end 
+end
+
+CLI_interface.start
