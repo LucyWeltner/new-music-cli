@@ -3,6 +3,7 @@ require_relative "./scraper.rb"
 
 class CLI_interface 
   def self.start 
+    Song.make_songs_from_description
     puts "Welcome! To see a list of songs released this week, write display. To search for a specific song or artist who released a song this week, write search."
     input = gets.chomp!
     input = input.downcase

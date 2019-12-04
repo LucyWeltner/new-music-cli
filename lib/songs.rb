@@ -27,12 +27,12 @@ class Song
   end 
   
   def self.listen_query_array(song_array)
-    puts "Would you like to listen to any of these songs? If yes, press the number corresponding to the song you'd like to listen to. If no, press any other key."
+    puts "Press the number corresponding to the song you'd like to listen to."
     listen = gets.chomp!.to_i
     if listen > 0 && listen < song_array.length + 1 
       song_array[listen - 1].listen_to_song
     end
-    puts "Would you like to listen to another song? Type y if yes."
+    puts "Would you like to listen to another song? Type y if yes. If no, press any other key."
     listen = gets.chomp!
     if listen.downcase == "y"
       self.listen_query_array(song_array)
@@ -110,6 +110,5 @@ class Song
   end
 end 
 
-Song.make_songs_from_description
-Song.display_all
+#Song.search
 
