@@ -1,4 +1,6 @@
 require_relative "../lib/scraper.rb"
+require 'launchy'
+require 'pry'
 
 class Song
   attr_accessor :title, :artist, :url
@@ -17,8 +19,18 @@ class Song
     end
   end 
   
+  def self.listen_query_array(song_array)
+    puts "Would you like to listen to any of these songs? Press the number corresponding to the song you'd like to listen to."
+    listen = gets.chomp!.to_i
+    if listen > 0 && listen < song_array.length + 1 
+      song_array[listen - 1].listen_to_song
+    end
+  end
+  
   def listen_to_song 
+    puts "listening to #{self.title}"
     system("open", self.url)
+    #Launchy.open(self.url)
   end
 
   def self.trim_description
@@ -67,11 +79,7 @@ class Song
         results.each_with_index do |song, index|
           puts "#{index+1}. #{song.title} by #{song.artist}. Listen at #{song.url}"
         end
-        puts "Would you like to listen to any of these songs? Press the number corresponding to the song you'd like to listen to."
-        listen = gets.chomp!.to_i
-        if listen > 0 && listen < results.length + 1 
-          results[listen - 1].listen_to_song
-        end
+        listen_query_array(results)
       #if there is only one result, show only that result
       else 
         puts "The song that matches your query is #{results[0].title} by #{results[0].artist} which you can listen to at #{results[0].url}."
@@ -95,9 +103,10 @@ class Song
     self.all.each_with_index do |song, index|
       puts "#{index+1}. #{song.title} by #{song.artist} listen at #{song.url}"
     end
+    listen_query_array(self.all)
   end
 end 
 
 Song.make_songs_from_description
-Song.search
+Song.display_all
 
