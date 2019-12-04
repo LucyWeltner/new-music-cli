@@ -19,4 +19,4 @@ class CLI_interface
   end 
 end
 
-CLI_interface.start
+#CLI_interface.start

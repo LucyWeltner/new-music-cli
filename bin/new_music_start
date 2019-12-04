@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "new/music/cli"
+require_relative "../lib/CLI.rb"
 
-CLI.start
+CLI_interface.start
