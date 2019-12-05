@@ -32,10 +32,14 @@ class Song
     if listen > 0 && listen < song_array.length + 1 
       song_array[listen - 1].listen_to_song
     end
-    puts "Would you like to listen to another song? Type y if yes. If no, press any other key."
-    listen = gets.chomp!
-    if listen.downcase == "y"
-      self.listen_query_array(song_array)
+    until (/exit\W?/).match("#{listen}")
+      puts "Would you like to listen to another song? Type y if yes. If you'd like to search for a song or artist, press s. If you'd like to quit, type exit."
+      listen = gets.chomp!
+      if listen.downcase == "y"
+        self.listen_query_array(song_array)
+      elsif listen.downcase == "s"
+        self.search
+      end
     end
   end
 
@@ -95,12 +99,12 @@ class Song
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
     end 
-    until input.downcase == "exit" || input.downcase == "exit!"
+    until (/exit\W?/).match("#{input.downcase}")
       puts "Would you like to search for another song? Type y if yes. If you would like to display all songs, press d. To quit, type exit."
       input = gets.chomp!
-      if input. == "y"
+      if input.downcase == "y"
         self.search 
-      elsif input == "d"
+      elsif input.downcase == "d"
         self.display_all
       end
     end

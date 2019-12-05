@@ -5,8 +5,4 @@ require_relative "../lib/CLI.rb"
 require_relative "../lib/songs.rb"
 require_relative "../lib/artist.rb"
 
-Song.make_songs_from_description
-Song.display_all
-
-
-#CLI_interface.start
+CLI_interface.start
