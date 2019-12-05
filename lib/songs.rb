@@ -1,5 +1,4 @@
 require_relative "../lib/scraper.rb"
-require_relative "../lib/artist.rb"
 require 'launchy'
 require 'pry'
 
@@ -59,7 +58,7 @@ class Song
     url_array = description.select{|line| line.include?("https://")}
     #iterate over song array and create a new song object for each element of the array. 
     song_aoa.each_with_index do |song, index|
-      new_song = self.new(Artist.find_or_create(song[1]),song[0],url_array[index])
+      new_song = self.new(song[1], Artist.find_or_create(song[0]),url_array[index])
     end
   end
   
@@ -111,6 +110,5 @@ class Song
   end
 end 
 
-Song.make_songs_from_description
-Song.display_all
+
 

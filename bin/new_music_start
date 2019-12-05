@@ -2,5 +2,10 @@
 
 require "bundler/setup"
 require_relative "../lib/CLI.rb"
+require_relative "../lib/songs.rb"
+require_relative "../lib/artist.rb"
 
-CLI_interface.start
+Song.make_songs_from_description
+Artist.find_or_create("Bill Callahan")
+
+#CLI_interface.start

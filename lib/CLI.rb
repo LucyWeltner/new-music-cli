@@ -1,4 +1,4 @@
-require_relative "./songs.rb"
+# require_relative "./songs.rb"
 require_relative "./scraper.rb"
 
 class CLI_interface 
@@ -18,5 +18,3 @@ class CLI_interface
     end 
   end 
 end
-
-#CLI_interface.start

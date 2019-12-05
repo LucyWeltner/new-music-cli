@@ -1,5 +1,3 @@
-require_relative "./songs.rb"
-
 class Artist 
   attr_accessor :name 
   def initialize(name)
@@ -20,4 +18,3 @@ class Artist
   end 
 end
 
-Artist.find_or_create("Bill Callahan")
