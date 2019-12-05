@@ -6,6 +6,7 @@ require_relative "../lib/songs.rb"
 require_relative "../lib/artist.rb"
 
 Song.make_songs_from_description
-Artist.find_or_create("Bill Callahan")
+Song.display_all
+
 
 #CLI_interface.start

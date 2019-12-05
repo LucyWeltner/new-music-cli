@@ -95,6 +95,15 @@ class Song
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
     end 
+    until input.downcase == "exit" || input.downcase == "exit!"
+      puts "Would you like to search for another song? Type y if yes. If you would like to display all songs, press d. To quit, type exit."
+      input = gets.chomp!
+      if input. == "y"
+        self.search 
+      elsif input == "d"
+        self.display_all
+      end
+    end
   end 
   
   def self.all 
