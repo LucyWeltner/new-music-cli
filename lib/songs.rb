@@ -33,7 +33,7 @@ class Song
     if listen > 0 && listen < song_array.length + 1 
       song_array[listen - 1].listen_to_song
     end
-    until (/exit\W?/).match("#{listen}")
+    while !(/exit\W?/).match("#{listen}") && @@quit == false
       puts "Would you like to listen to another song? Type y if yes. If you'd like to search for a song or artist, press s. If you'd like to quit, type exit."
       listen = gets.chomp!
       if listen.downcase == "y"
