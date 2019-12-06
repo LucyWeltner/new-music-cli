@@ -5,6 +5,7 @@ require 'pry'
 class Song
   attr_accessor :title, :artist, :url
   @@songs = []
+  @@quit = false
   def initialize(title, artist, url)
     @title = title 
     @artist = artist 
@@ -39,6 +40,8 @@ class Song
         self.listen_query_array(song_array)
       elsif listen.downcase == "s"
         self.search
+      elsif listen.downcase == "exit"
+      	@@quit = true 
       end
     end
   end
@@ -99,13 +102,15 @@ class Song
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
     end 
-    until (/exit\W?/).match("#{input.downcase}")
+    while !(/exit\W?/).match("#{input.downcase}") && @@quit == false
       puts "Would you like to search for another song? Type y if yes. If you would like to display all songs, press d. To quit, type exit."
       input = gets.chomp!
       if input.downcase == "y"
         self.search 
       elsif input.downcase == "d"
         self.display_all
+      elsif input.downcase == "exit"
+      	@@quit = true 
       end
     end
   end 
