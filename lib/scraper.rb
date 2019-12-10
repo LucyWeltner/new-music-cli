@@ -1,8 +1,9 @@
 require "json"
 require "open-uri"
+require "dot env"
 
 class JsonParser
-  API_KEY = "AIzaSyC2_Q6OO7AaVveAOwRTr8dnEbwpSCPm6HU"
+  API_KEY = ENV["API"]
   def self.parse_playlist_json
     json = open("https://www.googleapis.com/youtube/v3/playlistItems?playlistId=PLP4CSgl7K7or84AAhr7zlLNpghEnKWu2c&part=contentDetails&key=" + API_KEY).read
     json = JSON.parse(json)
@@ -15,4 +16,5 @@ class JsonParser
     description
   end
 end
-    
+#.env file
+ #gem name = dot env   
