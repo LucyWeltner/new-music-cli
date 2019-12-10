@@ -30,7 +30,7 @@ class Song
   def self.listen_query_array(song_array)
     puts "Press the number corresponding to the song you'd like to listen to."
     listen = gets.chomp!.to_i
-    #if the user types a number n bigger than 0 and smaller than the number of songs, play the nth song
+    #if the user types a number n, play the nth song. If there is no nth song, put out an error message.
     if listen > 0 && listen < song_array.length + 1 
       song_array[listen - 1].listen_to_song
     else
@@ -108,6 +108,7 @@ class Song
     else 
       puts "Sorry, there are no results that match your query. Please check your spelling and try again."
     end 
+    #continue prompting user to search, display, or exit until the user types exit...UNLESS the user has already typed exit in another loop (which sets @@quit to true)
     while !(/exit\W?/).match("#{input.downcase}") && @@quit == false
       puts "Would you like to search for another song? Type y if yes. If you would like to display all songs, press d. To quit, type exit."
       input = gets.chomp!
@@ -116,7 +117,7 @@ class Song
       elsif input.downcase == "d"
         self.display_all
       elsif input.downcase == "exit"
-      #if the user exits this loop, @@quit is set to "true." Once @@quit equals true, the program will not go into any other loops and will stop.
+      #if the user exits this loop, @@quit is set to "true." Once @@quit equals true, the program will exit all loops.
       	@@quit = true 
       end
     end

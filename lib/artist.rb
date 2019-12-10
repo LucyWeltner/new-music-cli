@@ -4,17 +4,12 @@ class Artist
     @name = name
   end 
   def self.find_or_create(name)
-    found = false 
-    Song.all.each do |song|
-      if song.artist.name == name 
-        found = song.artist
-      end 
+    found = Song.all.find do |song|
+      song.artist.name == name
     end 
-    if found 
-      return found 
-    else 
+    if !found 
       self.new(name)
-    end 
-  end 
+    end
+  end
 end
 
